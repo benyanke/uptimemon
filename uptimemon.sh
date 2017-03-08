@@ -19,8 +19,12 @@ source $DIR/functions.sh
 # Add sites here to monitor
 # check "domain"
 
-check "www.romancatholicman.com"
 check "www.stmarypb.com"
+check "music.stmarypb.com"
+check "cloud.stmarypb.com"
+check "record.stmarypb.com"
+
+check "www.romancatholicman.com"
 check "knightsofdivinemercy.com"
 
 check "angeluspress.org"

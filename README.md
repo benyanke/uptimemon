@@ -7,8 +7,13 @@ I guess something has to go here at some point
 ### Short term
  * Clean up logging - it's currently a mess
  * Only output errors to slack - clean up that output too
-
- * 
+ * Tracking for how many alerts have been sent - only send every X minutes (perhaps exponential backoff)
+ * Alerts only on "status change" (one on site down, one on site restored)
+ * SMS alerts with twillio
+ * Add an optional random backoff before pinging server - so as to not hit single servers with multiple monitored sites as hard
+ * Add error checking for when slack alerts fail - write to log, alert other methods?
+ * Add a dashboard/debug mode, outputing info on all sites
+ * Add Exact HTTP code to error string when curl returns 22 code
 
 ### Long Term:
  * Add dashboard functionality - query the script to find site health

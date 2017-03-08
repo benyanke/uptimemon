@@ -21,7 +21,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default maxiumum pageload time
 defaultAllowableLoadTime="10.0";
-# defaultAllowableLoadTime="0.2";
+# defaultAllowableLoadTime="0.001"; ## Handy when you want to trigger all alerts
 
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
@@ -71,7 +71,7 @@ function checkWeb() {
   before=`timestamp`;
 
   # Check web
-  curl -L -s $domain > /dev/null 2> /dev/null
+  curl --fail -L -s $domain > /dev/null 2> /dev/null
 
   curlReturn=$?
 
@@ -99,7 +99,7 @@ function checkWeb() {
 
   # Output
   out="Domain:         $domain"
-  out="$out\n  CURL Status:  $curlReturnStr ($curlReturn)"
+  out="$out\n  CURL Status:  $curlReturnStr"
   out="$out\n  Load Time:    $loadTime sec"
   out="$out\n\n"
 
@@ -121,11 +121,10 @@ function checkWeb() {
 }
 
 
-
+# Returns unix timestamp in 1/1000 of a
+# second for timing purposes
 timestamp() {
   date +%s%N | cut -b1-13
-#  echo $(date +%s)
-#  echo $(date +%s%N | cut -b1-13)
 }
 
 
@@ -150,12 +149,14 @@ function curlCodeToString() {
   elif [[ $errorCode == 4 ]]; then
     echo "Requires a non-installed feature";
 
+  elif [[ $errorCode == 22 ]]; then
+    echo "HTTP Error";
 
   elif [[ $errorCode == 51 ]]; then
     echo "Failed certificate validation";
 
   else
-    echo "Unknown error";
+    echo "Unknown error: Curl code $errorCode";
 
   fi
 
@@ -181,7 +182,9 @@ function slackalert() {
   curl \
     -X \
     POST -H 'Content-type: application/json' \
-    --data "{\"text\":\"$message\"}" https://hooks.slack.com/services/$slackAuthToken''
+    --data "{\"text\":\"$message\"}" https://hooks.slack.com/services/$slackAuthToken'' >/dev/null 2>&1
+
+  # Add notification here to check curl's return status
 
 }
 
