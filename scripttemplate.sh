@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 ##############################################
-# uptimemod - simple uptime monitor
+# uptimemod - Simple Service Monitoring
 #
-# Setup script for uptimemod, a monitoring
-# script for web services
+# Description
+# Description
+# Description
 #
 # Created by Ben Yanke
 # https://github.com/benyanke/uptimemond
