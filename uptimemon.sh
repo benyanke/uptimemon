@@ -21,4 +21,5 @@ source $DIR/functions.sh
 
 check "www.romancatholicman.com"
 check "www.stmarypb.com"
+check "null.publicserver.xyz"
 

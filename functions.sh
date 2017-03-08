@@ -20,13 +20,16 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default maxiumum pageload time
-defaultAllowableLoadTime="5.0";
+defaultAllowableLoadTime="1.0";
 
 # Main Log file
-mainLogFile="/var/log/uptimemond/main.log"
+mainLogFile="/var/log/uptimemon/main.log"
 
 # Error Main Log file
-errorLogFile="/var/log/uptimemond/error.log"
+errorLogFile="/var/log/uptimemon/error.log"
+
+# Slack auth token
+slackAuthToken="xxxxxxxxx/yyyyyyyyy/zzzzzzzzzzzzzzzzzzzzzzzz"
 
 ###### Functions ######
 
@@ -101,6 +104,7 @@ function checkWeb() {
   if [[ $error == 1 ]]; then
     printf "$out";
     logger "$out";
+    slackalert "$out";
     return 1;
   fi
 
@@ -166,3 +170,17 @@ function logger() {
   echo "$content" >> $mainLogFile;
 
 }
+
+
+# Slack Alert
+function slackalert() {
+  message=$1;
+
+  curl \
+    -X \
+    POST -H 'Content-type: application/json' \
+    --data "{\"text\":\"uptimemon alert: \n$message\"}" https://hooks.slack.com/services/$slackAuthToken''
+
+}
+
+
