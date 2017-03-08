@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ##############################################
-# uptimemod - Simple Service Monitoring
+# uptimemon - Simple Service Monitoring
 #
 # Functions and Variables file
 #
@@ -11,7 +11,7 @@
 # other scripts.
 #
 # Created by Ben Yanke
-# https://github.com/benyanke/uptimemond
+# https://github.com/benyanke/uptimemon
 ##############################################
 
 ###### Variables ######

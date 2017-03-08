@@ -1,12 +1,12 @@
  #!/usr/bin/env bash
 
 ##############################################
-# uptimemod - Simple Service Monitoring
+# uptimemon - Simple Service Monitoring
 #
 # Main File - Run this file to run tests
 #
 # Created by Ben Yanke
-# https://github.com/benyanke/uptimemond
+# https://github.com/benyanke/uptimemon
 ##############################################
 
 # Get Current Directory
