@@ -14,6 +14,7 @@ I guess something has to go here at some point
  * Add error checking for when slack alerts fail - write to log, alert other methods?
  * Add a dashboard/debug mode, outputing info on all sites
  * Add Exact HTTP code to error string when curl returns 22 code
+ * Add custom useragent to tests - for the purposes of cleaning webserver logs
 
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
