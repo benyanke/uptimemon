@@ -22,6 +22,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Default maxiumum pageload time
 defaultAllowableLoadTime="5.0";
 
+# Main Log file
+mainLogFile="/var/log/uptimemond/main.log"
+
+# Error Main Log file
+errorLogFile="/var/log/uptimemond/error.log"
+
 ###### Functions ######
 
 # Master check function
@@ -94,6 +100,7 @@ function checkWeb() {
 
   if [[ $error == 1 ]]; then
     printf "$out";
+    logger "$out";
     return 1;
   fi
 
@@ -146,5 +153,16 @@ function curlCodeToString() {
 
   fi
 
+
+}
+
+
+# Logger
+function logger() {
+  content=$1;
+
+  # add writing to log file here
+  touch $mainLogFile
+  echo "$content" >> $mainLogfile;
 
 }
