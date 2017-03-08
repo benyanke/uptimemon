@@ -93,6 +93,12 @@ function checkWeb() {
   fi
 
   echo "";
+
+
+  if [[ $error == 1 ]]; then
+    return 1;
+  fi
+
 }
 
 
