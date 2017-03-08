@@ -21,3 +21,8 @@ source $DIR/functions.sh
 
 check "www.romancatholicman.com"
 check "www.stmarypb.com"
+check "angeluspress.org" 7
+check "www.angelusonline.org" 7
+check "knightsofdivinemercy.com"
+check "www.latinmassmadison.org"
+check "null.publicserver.xyz"
