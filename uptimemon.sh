@@ -27,8 +27,8 @@ check "record.stmarypb.com"
 check "www.romancatholicman.com"
 check "knightsofdivinemercy.com"
 
-check "angeluspress.org"
-check "www.angelusonline.org"
+# check "angeluspress.org"
+# check "www.angelusonline.org"
 
 check "www.latinmassmadison.org"
 
