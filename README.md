@@ -17,6 +17,7 @@ I guess something has to go here at some point
  * Add custom useragent to tests - for the purposes of cleaning webserver logs
  * Retry before alerting to confirm actual error instead of single reporting failure
    * Only log, don't alert, if failure does not get reported
+ * Add option to test less frequently on individual sites
 
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
