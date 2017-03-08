@@ -18,6 +18,7 @@ I guess something has to go here at some point
  * Retry before alerting to confirm actual error instead of single reporting failure
    * Only log, don't alert, if failure does not get reported
  * Add option to test less frequently on individual sites
-
+ * Allow two way conversation, to mark an issue as "received"
+   * Alert flow would be: notify -> marked as confirmed received -> fixed
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
