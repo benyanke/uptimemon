@@ -19,7 +19,6 @@ source $DIR/functions.sh
 # Add sites here to monitor
 # check "domain"
 
-check "null.publicserver.xyz"
 check "www.romancatholicman.com"
 check "www.stmarypb.com"
 
