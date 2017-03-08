@@ -19,22 +19,42 @@
 # Current working directory of this script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+# Default maxiumum pageload time
+defaultAllowableLoadTime="5.0";
+
 ###### Functions ######
 
 # Master check function
 function check() {
+
   domain=$1;
+  maxAllowbleLoadTime=$2;
 
   # Add checks here
-  checkWeb $domain;
+  checkWeb $domain $maxAllowbleLoadTime;
 
+
+  # Clear variables for later user
+  domain="";
+  maxAllowbleLoadTime="";
 }
 
 
 
 # Check the web
 function checkWeb() {
+  # Error flag
+  error=0;
+
+  # Get domain from string
   domain=$1;
+
+  # Get max acceptable load time
+  if [[ $2 == "" ]] ; then
+    maxAllowableLoadTime=$defaultAllowableLoadTime;
+  else
+    maxAllowableLoadTime=$2;
+  fi
 
   # For tracking load time
   before=`timestamp`;
@@ -52,6 +72,20 @@ function checkWeb() {
   # Calculate loadtime in seconds
   loadTime=$(perl -e "print $loadTimeMs / 1000")
 
+
+  # Check Curl Code
+
+
+  # Check Load time
+  loadTimeResult=$(echo $maxAllowableLoadTime'<'$loadTime | bc -l )
+  if [[ $loadTimeResult == 1 ]] ; then
+    echo "LOAD TIME OVER LIMIT";
+    error=1;
+  fi
+
+
+
+  # Output
   echo "Domain: $domain"
   echo "CURL Code: $curlReturn"
   echo "Load Time: $loadTime sec"
