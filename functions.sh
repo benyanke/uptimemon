@@ -163,6 +163,6 @@ function logger() {
 
   # add writing to log file here
   touch $mainLogFile
-  echo "$content" >> $mainLogfile;
+  echo "$content" >> $mainLogFile;
 
 }
