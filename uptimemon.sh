@@ -25,4 +25,6 @@ check "angeluspress.org" 7
 check "www.angelusonline.org" 7
 check "knightsofdivinemercy.com"
 check "www.latinmassmadison.org"
-check "null.publicserver.xyz"
+
+# Broken example
+#check "null.publicserver.xyz"
