@@ -20,7 +20,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default maxiumum pageload time
-defaultAllowableLoadTime="7.0";
+defaultAllowableLoadTime="10.0";
+# defaultAllowableLoadTime="0.2";
 
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
@@ -41,7 +42,7 @@ function check() {
   maxAllowbleLoadTime=$2;
 
   # Add checks here
-  checkWeb $domain $maxAllowbleLoadTime;
+  checkWeb $domain $maxAllowbleLoadTime &
 
 
   # Clear variables for later user

@@ -21,11 +21,21 @@ source $DIR/functions.sh
 
 check "www.romancatholicman.com"
 check "www.stmarypb.com"
+check "knightsofdivinemercy.com"
+
 check "angeluspress.org"
 check "www.angelusonline.org"
-check "knightsofdivinemercy.com"
+
 check "www.latinmassmadison.org"
+
 check "www.rachelyanke.com"
+check "liturgicalyear.benyanke.com"
+check "breadfromheaven.benyanke.com"
+
+check "cal.benyanke.com"
+check "ipcheck.benyanke.com"
+check "misc.benyanke.com"
+check "wp.benyanke.com"
 
 # Broken example
 #check "null.publicserver.xyz"
