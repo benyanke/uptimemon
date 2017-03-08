@@ -72,10 +72,6 @@ function checkWeb() {
   # Calculate loadtime in seconds
   loadTime=$(perl -e "print $loadTimeMs / 1000")
 
-
-  # Check Curl Code
-
-
   # Check Load time
   loadTimeResult=$(echo $maxAllowableLoadTime'<'$loadTime | bc -l )
   if [[ $loadTimeResult == 1 ]] ; then
@@ -83,13 +79,20 @@ function checkWeb() {
     error=1;
   fi
 
+  # Convert curl code
+  curlReturnStr=$(curlCodeToString $curlReturn);
 
 
   # Output
-  echo "Domain: $domain"
-  echo "CURL Code: $curlReturn"
-  echo "Load Time: $loadTime sec"
-  echo ""
+  echo "Domain:         $domain"
+  echo "  CURL Status:  $curlReturnStr ($curlReturn)"
+  echo "  Load Time:    $loadTime sec"
+
+  if [[ $error == 1 ]]; then
+    echo "ERROR";
+  fi
+
+  echo "";
 }
 
 
@@ -106,4 +109,38 @@ timestamp() {
   date +%s%N | cut -b1-13
 #  echo $(date +%s)
 #  echo $(date +%s%N | cut -b1-13)
+}
+
+
+# convert int curl code to string error
+# https://curl.haxx.se/libcurl/c/libcurl-errors.html
+function curlCodeToString() {
+
+  errorCode=$1;
+
+  if [[ $errorCode == 0 ]]; then
+    echo "Success";
+
+  elif [[ $errorCode == 1 ]]; then
+    echo "Unsupported Protocol";
+
+  elif [[ $errorCode == 2 ]]; then
+    echo "Failed CURL";
+
+  elif [[ $errorCode == 3 ]]; then
+    echo "Not a properly formatted URL";
+
+  elif [[ $errorCode == 4 ]]; then
+    echo "Requires a non-installed feature";
+
+
+  elif [[ $errorCode == 51 ]]; then
+    echo "Failed certificate validation";
+
+  else
+    echo "Unknown error";
+
+  fi
+
+
 }
