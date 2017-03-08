@@ -180,7 +180,7 @@ function slackalert() {
   curl \
     -X \
     POST -H 'Content-type: application/json' \
-    --data "{\"text\":\"uptimemon alert: \n$message\"}" https://hooks.slack.com/services/$slackAuthToken''
+    --data "{\"text\":\"$message\"}" https://hooks.slack.com/services/$slackAuthToken''
 
 }
 
