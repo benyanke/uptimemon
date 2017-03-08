@@ -81,21 +81,19 @@ function checkWeb() {
 
   # Convert curl code
   curlReturnStr=$(curlCodeToString $curlReturn);
+  if [[ curlReturn -ne 0 ]] ; then
+    error=1;
+  fi
 
 
   # Output
-  echo "Domain:         $domain"
-  echo "  CURL Status:  $curlReturnStr ($curlReturn)"
-  echo "  Load Time:    $loadTime sec"
+  out="Domain:         $domain"
+  out="$out\n  CURL Status:  $curlReturnStr ($curlReturn)"
+  out="$out\n  Load Time:    $loadTime sec"
+  out="$out\n\n"
 
   if [[ $error == 1 ]]; then
-    echo "ERROR";
-  fi
-
-  echo "";
-
-
-  if [[ $error == 1 ]]; then
+    printf "$out";
     return 1;
   fi
 
