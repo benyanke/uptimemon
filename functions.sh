@@ -20,7 +20,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default maxiumum pageload time
-defaultAllowableLoadTime="1.0";
+defaultAllowableLoadTime="5.0";
 
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
