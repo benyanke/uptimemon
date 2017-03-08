@@ -20,5 +20,11 @@ I guess something has to go here at some point
  * Add option to test less frequently on individual sites
  * Allow two way conversation, to mark an issue as "received"
    * Alert flow would be: notify -> marked as confirmed received -> fixed
+ * Alert escalation
+   * Start with level 1 (email or slack, for example)
+   * If no response in x minutes, go to level 2 (sms, for example)
+   * If no response in x minutes, go to level 3 (call and another email, for example)
+   * Also, allow escalation blocking on a per-site basis - some sites aren't important enough to get a phone call about
+
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
