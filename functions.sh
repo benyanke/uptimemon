@@ -29,7 +29,8 @@ mainLogFile="/var/log/uptimemon/main.log"
 errorLogFile="/var/log/uptimemon/error.log"
 
 # Slack auth token
-slackAuthToken="xxxxxxxxx/yyyyyyyyy/zzzzzzzzzzzzzzzzzzzzzzzz"
+# slackAuthToken="xxxxxxxxx/yyyyyyyyy/zzzzzzzzzzzzzzzzzzzzzzzz"
+slackAuthToken="$(cat $DIR/slack.token)";
 
 ###### Functions ######
 
