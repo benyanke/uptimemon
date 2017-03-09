@@ -26,7 +26,7 @@ defaultAllowableLoadTime="10.0";
 # Backoff and repeat time
 # If there is a failure, wait this many seconds before retrying to confirm outage
 backoffTime="10";
-backoffTime="1";
+# backoffTime="1";
 
 # Repeat before alert
 # If there is a failure, repeat test this many times before alerting to failure
@@ -34,7 +34,7 @@ failureRepeat="3";
 
 
 # Sleep Between Checks
-sleepBetweenChecks=1;
+sleepBetweenChecks=5;
 
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
@@ -63,7 +63,7 @@ function check() {
   maxAllowbleLoadTime=$2;
 
   # Add checks here
-  checkWeb $domain $maxAllowbleLoadTime
+  checkWeb $domain $maxAllowbleLoadTime &
   sleep $sleepBetweenChecks
 
   # Clear variables for later user
