@@ -61,7 +61,7 @@ function check() {
 
   # Add checks here
   checkWeb $domain $maxAllowbleLoadTime
-
+  sleep 3
 
   # Clear variables for later user
   domain="";
