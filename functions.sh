@@ -23,6 +23,16 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 defaultAllowableLoadTime="10.0";
 # defaultAllowableLoadTime="0.001"; ## Handy when you want to trigger all alerts
 
+# Backoff and repeat time
+# If there is a failure, wait this many seconds before retrying to confirm outage
+backoffTime="10";
+backoffTime="1";
+
+# Repeat before alert
+# If there is a failure, repeat test this many times before alerting to failure
+failureRepeat="3";
+
+
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
 
@@ -50,7 +60,7 @@ function check() {
   maxAllowbleLoadTime=$2;
 
   # Add checks here
-  checkWeb $domain $maxAllowbleLoadTime &
+  checkWeb $domain $maxAllowbleLoadTime
 
 
   # Clear variables for later user
@@ -74,6 +84,19 @@ function checkWeb() {
   else
     maxAllowableLoadTime=$2;
   fi
+
+  # The current check count
+  if [[ $3 == "" ]] ; then
+#    echo "default: 1 ($3)"
+    checkNum=1;
+  else
+    checkNum=$3;
+#    echo "override: $checkNum"
+  fi
+
+
+#  echo "Start DEBUG: $domain $maxAllowableLoadTime $checkNum";
+
 
   # For tracking load time
   before=`timestamp`;
@@ -109,16 +132,44 @@ function checkWeb() {
   fi
 
 
+#  echo "end of main test segment $domain";
 
   if [[ $error == 1 ]]; then
 
-    out="$out\n\n"
+#    echo "Error state";
 
-    printf "$out";
-    logger "$out";
-    slackalert "$out";
-    twilioalert "$out";
-    return 1;
+#    checkNum=$(eval "$failureRepeat + 1");
+
+#    if [[ $checkNum -le $failureRepeat ]] ; then
+
+#      echo "error $checkNum";
+
+#      checkNum=$(expr $checkNum + 1);
+ 
+#      echo "error $checkNum";
+
+#      sleep $backoffTime;
+#      echo "$domain $maxAllowableLoadTime $checkNum";
+#      check $domain $maxAllowableLoadTime $checkNum;
+
+#    else
+
+#      echo "sending alert - error $checkNum";
+
+      out="$out\n\n"
+
+      printf "$out";
+      logger "$out";
+      slackalert "$out";
+      twilioalert "$out";
+      return 1;
+
+#    fi
+
+#    else 
+
+#      echo "No error found on $domain"
+
   fi
 
 }

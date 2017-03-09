@@ -36,13 +36,9 @@ check "ipcheck.benyanke.com"
 check "misc.benyanke.com"
 check "wp.benyanke.com"
 
-sleep 5;
 check "www.stmarypb.com"
-sleep 5;
 check "music.stmarypb.com"
-sleep 5;
 check "cloud.stmarypb.com"
-sleep 5;
 check "record.stmarypb.com"
 
 
