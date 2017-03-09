@@ -83,27 +83,30 @@ function checkWeb() {
   # Calculate loadtime in seconds
   loadTime=$(perl -e "print $loadTimeMs / 1000")
 
+  out="Domain:         $domain"
+
+
   # Check Load time
   loadTimeResult=$(echo $maxAllowableLoadTime'<'$loadTime | bc -l )
   if [[ $loadTimeResult == 1 ]] ; then
-    echo "LOAD TIME OVER LIMIT";
+    out="$out\nLoad Time:     $loadTime sec"
     error=1;
   fi
 
   # Convert curl code
   curlReturnStr=$(curlCodeToString $curlReturn);
   if [[ curlReturn -ne 0 ]] ; then
+    out="$out\nCURL Status:   $curlReturnStr"
     error=1;
   fi
 
 
-  # Output
-  out="Domain:         $domain"
-  out="$out\n  CURL Status:  $curlReturnStr"
-  out="$out\n  Load Time:    $loadTime sec"
-  out="$out\n\n"
 
   if [[ $error == 1 ]]; then
+
+  # Output
+#    out="Domain:         $domain\n$out\n"
+
     printf "$out";
     logger "$out";
     slackalert "$out";
