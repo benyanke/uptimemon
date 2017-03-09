@@ -149,6 +149,18 @@ function curlCodeToString() {
   elif [[ $errorCode == 4 ]]; then
     echo "Requires a non-installed feature";
 
+  elif [[ $errorCode == 5 ]]; then
+    echo "Could not resolve proxy";
+
+  elif [[ $errorCode == 6 ]]; then
+    echo "Could not resolve host";
+
+  elif [[ $errorCode == 7 ]]; then
+    echo "Could not connect";
+
+  elif [[ $errorCode == 16 ]]; then
+    echo "HTTP2 framing layer issue";
+
   elif [[ $errorCode == 22 ]]; then
     echo "HTTP Error";
 
