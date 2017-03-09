@@ -31,3 +31,7 @@ I guess something has to go here at some point
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
  * Historical data storage - like smokeping, for example
+
+
+## Requirements - from Apt Repositories 
+ * BC 

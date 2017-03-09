@@ -105,7 +105,8 @@ function checkWeb() {
   before=`timestamp`;
 
   # Check web
-  curl --fail -L -s $domain > /dev/null 2> /dev/null
+  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+#  curl --fail -L -s $domain > /dev/null 2> /dev/null
 
   curlReturn=$?
 
