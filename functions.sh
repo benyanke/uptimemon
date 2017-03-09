@@ -248,7 +248,7 @@ function logger() {
 
   # add writing to log file here
   touch $mainLogFile
-  echo "$content" >> $mainLogFile;
+  printf "$content" >> $mainLogFile;
 
 }
 
