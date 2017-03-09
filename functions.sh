@@ -33,6 +33,9 @@ backoffTime="1";
 failureRepeat="3";
 
 
+# Sleep Between Checks
+sleepBetweenChecks=1;
+
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
 
@@ -61,7 +64,7 @@ function check() {
 
   # Add checks here
   checkWeb $domain $maxAllowbleLoadTime
-  sleep 3
+  sleep $sleepBetweenChecks
 
   # Clear variables for later user
   domain="";
@@ -131,7 +134,7 @@ function checkWeb() {
     error=1;
   fi
 
-
+   printf "$out";
 #  echo "end of main test segment $domain";
 
   if [[ $error == 1 ]]; then
