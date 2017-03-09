@@ -29,9 +29,17 @@ mainLogFile="/var/log/uptimemon/main.log"
 # Error Main Log file
 errorLogFile="/var/log/uptimemon/error.log"
 
-# Slack auth token
+# Slack api keys
 # slackAuthToken="xxxxxxxxx/yyyyyyyyy/zzzzzzzzzzzzzzzzzzzzzzzz"
 slackAuthToken="$(cat $DIR/slack.token)";
+
+
+# Twilio api keys
+twilio_sid="$(cat $DIR/twilio_sid.token)";
+twilio_auth="$(cat $DIR/twilio_auth.token)";
+twilio_to="$(cat $DIR/twilio_to.token)";
+twilio_from="$(cat $DIR/twilio_from.token)";
+
 
 ###### Functions ######
 
@@ -83,7 +91,7 @@ function checkWeb() {
   # Calculate loadtime in seconds
   loadTime=$(perl -e "print $loadTimeMs / 1000")
 
-  out="Domain:         $domain"
+  out="\nDomain:         $domain"
 
 
   # Check Load time
@@ -104,12 +112,12 @@ function checkWeb() {
 
   if [[ $error == 1 ]]; then
 
-  # Output
-#    out="Domain:         $domain\n$out\n"
+    out="$out\n\n"
 
     printf "$out";
     logger "$out";
     slackalert "$out";
+    twilioalert "$out";
     return 1;
   fi
 
@@ -175,7 +183,6 @@ function curlCodeToString() {
 
   fi
 
-
 }
 
 
@@ -203,4 +210,18 @@ function slackalert() {
 
 }
 
+# Twilio Alert
+function twilioalert() {
 
+  message=$1;
+#  message="$(echo "$message" | sed -r 's/\\n+/%0a/g')";
+  message="$(echo "$message" | sed -r 's/\\n+/ /g')";
+
+  curl -X POST -F "Body=Uptimemon: $message" \
+    -F "From=${twilio_from}" -F "To={$twilio_to}" \
+    "https://api.twilio.com/2010-04-01/Accounts/${twilio_sid}/Messages" \
+    -u "${twilio_sid}:${twilio_auth}" >/dev/null 2>&1
+
+  # Add notification here to check curl's return status
+
+}
