@@ -216,6 +216,7 @@ function twilioalert() {
   message=$1;
 #  message="$(echo "$message" | sed -r 's/\\n+/%0a/g')";
   message="$(echo "$message" | sed -r 's/\\n+/ /g')";
+  message="$(echo "$message"  | sed -r 's/  / /g' | sed -r 's/  / /g' | sed -r 's/  / /g' | sed -r 's/  / /g' | sed -r 's/  / /g')";
 
   curl -X POST -F "Body=Uptimemon: $message" \
     -F "From=${twilio_from}" -F "To={$twilio_to}" \
