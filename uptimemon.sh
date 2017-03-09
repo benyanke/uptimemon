@@ -19,11 +19,6 @@ source $DIR/functions.sh
 # Add sites here to monitor
 # check "domain"
 
-check "www.stmarypb.com"
-check "music.stmarypb.com"
-check "cloud.stmarypb.com"
-check "record.stmarypb.com"
-
 check "www.romancatholicman.com"
 check "knightsofdivinemercy.com"
 
@@ -40,6 +35,16 @@ check "cal.benyanke.com"
 check "ipcheck.benyanke.com"
 check "misc.benyanke.com"
 check "wp.benyanke.com"
+
+
+check "www.stmarypb.com"
+sleep 5
+check "music.stmarypb.com"
+sleep 5
+check "cloud.stmarypb.com"
+sleep 5
+check "record.stmarypb.com"
+
 
 # Broken example
 #check "null.publicserver.xyz"
