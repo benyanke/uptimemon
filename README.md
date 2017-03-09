@@ -5,6 +5,8 @@ I guess something has to go here at some point
 
 ## Todo
 ### Short term
+ * Rewrite in python, darnit
+   * Probably use sqlite for data storage
  * Clean up logging - it's currently a mess
  * Only output errors to slack - clean up that output too
  * Tracking for how many alerts have been sent - only send every X minutes (perhaps exponential backoff)
@@ -28,3 +30,4 @@ I guess something has to go here at some point
 
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
+ * Historical data storage - like smokeping, for example
