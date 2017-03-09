@@ -21,6 +21,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Default maxiumum pageload time
 defaultAllowableLoadTime="10.0";
+defaultAllowableLoadTime="40.0";
 # defaultAllowableLoadTime="0.001"; ## Handy when you want to trigger all alerts
 
 # Backoff and repeat time
