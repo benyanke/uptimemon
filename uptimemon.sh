@@ -32,7 +32,7 @@ check "liturgicalyear.benyanke.com"
 check "breadfromheaven.benyanke.com"
 
 check "cal.benyanke.com"
-check "ipcheck.benyanke.com"
+# check "ipcheck.benyanke.com"
 check "misc.benyanke.com"
 check "wp.benyanke.com"
 

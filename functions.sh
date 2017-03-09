@@ -130,7 +130,7 @@ function checkWeb() {
   # Convert curl code
   curlReturnStr=$(curlCodeToString $curlReturn);
   if [[ curlReturn -ne 0 ]] ; then
-    out="$out\nCURL Status:   $curlReturnStr"
+    out="$out\nHTTP Status:   $curlReturnStr"
     error=1;
   fi
 
@@ -206,7 +206,7 @@ function curlCodeToString() {
     echo "Unsupported Protocol";
 
   elif [[ $errorCode == 2 ]]; then
-    echo "Failed CURL";
+    echo "Unspecified CURL error";
 
   elif [[ $errorCode == 3 ]]; then
     echo "Not a properly formatted URL";
@@ -233,7 +233,7 @@ function curlCodeToString() {
     echo "Failed certificate validation";
 
   else
-    echo "Unknown error: Curl code $errorCode";
+    echo "Unknown error: CURL code #$errorCode";
 
   fi
 
