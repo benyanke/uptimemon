@@ -234,6 +234,9 @@ function curlCodeToString() {
   elif [[ $errorCode == 51 ]]; then
     echo "Failed certificate validation";
 
+  elif [[ $errorCode == 60 ]]; then
+    echo "TLS Certificate could not be verified";
+
   else
     echo "Unknown error: CURL code #$errorCode";
 
