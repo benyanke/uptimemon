@@ -3,6 +3,17 @@
 I guess something has to go here at some point
 
 
+## Files you need to create
+ * domains.list - list of domains to check
+ * Slack
+   * slack.token - slack token
+ * Twilio tokens
+   * twilio_auth.token  API auth token
+   * twilio_sid.token - Account SID
+   * twilio_from.token - Number to send message to
+   * twilio_to.token - Number to alert
+
+
 ## Todo
 ### Short term
  * Rewrite in python, darnit
@@ -34,16 +45,4 @@ I guess something has to go here at some point
 
 
 ## Requirements - from Apt Repositories 
- * BC 
-
-
-## Files you need to create
- * domains.list - list of domains to check
- * Slack
-   * slack.token - slack token
- * Twilio tokens
-   * twilio_auth.token  API auth token
-   * twilio_sid.token - Account SID
-   * twilio_from.token - Number to send message to
-   * twilio_to.token - Number to alert
-
+ * BC
