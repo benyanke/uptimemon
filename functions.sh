@@ -35,7 +35,7 @@ failureRepeat="3";
 
 
 # Sleep Between Checks
-sleepBetweenChecks=5;
+sleepBetweenChecks=10;
 
 # Main Log file
 mainLogFile="/var/log/uptimemon/main.log"
@@ -284,4 +284,28 @@ function twilioalert() {
 
   # Add notification here to check curl's return status
 
+}
+
+# Lock functions
+
+function isLocked() {
+        if [ -e /tmp/sitescanlock ] ; then
+		return 0;
+	else
+		return 1;
+	fi
+}
+
+function exitIfLocked() {
+	isLocked && exit;
+}
+
+function createLock() {
+	echo "Creating lock";
+	echo $(date +%s) > /tmp/sitescanlock 2>/dev/null
+}
+
+function clearLock() {
+	echo "Clearing lock";
+	rm /tmp/sitescanlock >/dev/null 2>&1
 }
