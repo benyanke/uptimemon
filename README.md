@@ -4,7 +4,7 @@ I guess something has to go here at some point
 
 
 ## Files you need to create
- * domains.list - list of domains to check
+ * domains.list - list of domains to check (newline separated)
  * Slack
    * slack.token - slack token
  * Twilio tokens
