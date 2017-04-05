@@ -24,7 +24,7 @@ exitIfLocked;
 # Creating lock file
 createLock;
 
-for site in $(cat $DIR/domains.list) ; do
+for site in $(cat $DIR/domains.list  | sed -e '/^#/d' ) ; do
 	check "$site"
 done
 
