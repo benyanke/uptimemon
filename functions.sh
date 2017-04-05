@@ -297,7 +297,7 @@ function isLocked() {
 }
 
 function exitIfLocked() {
-	isLocked && exit;
+	isLocked && echo "Exiting due to already-running" && exit;
 }
 
 function createLock() {
@@ -309,3 +309,4 @@ function clearLock() {
 	echo "Clearing lock";
 	rm /tmp/sitescanlock >/dev/null 2>&1
 }
+
