@@ -105,8 +105,12 @@ function checkWeb() {
   # For tracking load time
   before=`timestamp`;
 
+  # This ensures that most caches are bypassed
+  cacheBustDomain="$domain?`date +"%s"`"
+
   # Check web
-  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $cacheBustDomain > /dev/null 2> /dev/null
+#  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
 #  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
 #  curl --fail -L -s $domain > /dev/null 2> /dev/null
 
