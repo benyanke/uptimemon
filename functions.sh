@@ -106,7 +106,8 @@ function checkWeb() {
   before=`timestamp`;
 
   # Check web
-  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+#  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
 #  curl --fail -L -s $domain > /dev/null 2> /dev/null
 
   curlReturn=$?
@@ -229,7 +230,7 @@ function curlCodeToString() {
     echo "HTTP2 framing layer issue";
 
   elif [[ $errorCode == 22 ]]; then
-    echo "HTTP Error";
+    echo "HTTP 400 Error";
 
   elif [[ $errorCode == 51 ]]; then
     echo "Failed certificate validation";
