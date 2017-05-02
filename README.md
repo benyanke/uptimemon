@@ -16,6 +16,8 @@ Typically it's easiest to run via cron, usually once per minute, or once per 5 m
    * twilio_from.token - Number to send message to
    * twilio_to.token - Number to alert
 
+## Requirements - from Apt Repositories 
+ * BC
 
 ## Todo
 ### Short term
@@ -45,7 +47,3 @@ Typically it's easiest to run via cron, usually once per minute, or once per 5 m
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
  * Historical data storage - like smokeping, for example
-
-
-## Requirements - from Apt Repositories 
- * BC
