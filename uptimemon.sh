@@ -18,7 +18,7 @@ source $DIR/functions.sh
 # Run clearLock on script exit
 # trap clearLock EXIT # Gotta fix this in a more robust way
 
-# Exiting if already running - don't allow to run concurrently!
+# Exiting if already running - don't allow to run concurrently! You'll risk running a DOS against yourself
 exitIfLocked;
 
 # Creating lock file
