@@ -201,10 +201,16 @@ timestamp() {
 
 
 # convert int curl code to string error
-# https://curl.haxx.se/libcurl/c/libcurl-errors.html
+# Source: https://curl.haxx.se/libcurl/c/libcurl-errors.html
 function curlCodeToString() {
 
   errorCode=$1;
+
+  # Not including all of them here, since they'll so rarely be used
+  # Handling the common codes, then outputing the int code itself if
+  # it's not handled here.
+
+  # Anybody: feel free to fill in more of these and issue a pull request - I'll happily pull
 
   if [[ $errorCode == 0 ]]; then
     echo "Success";
@@ -236,11 +242,20 @@ function curlCodeToString() {
   elif [[ $errorCode == 22 ]]; then
     echo "HTTP 400 Error";
 
+  elif [[ $errorCode == 35 ]]; then
+    echo "TLS handshake error";
+
   elif [[ $errorCode == 51 ]]; then
     echo "Failed certificate validation";
 
+  elif [[ $errorCode == 52 ]]; then
+    echo "No data returned from server";
+
+  elif [[ $errorCode == 56 ]]; then
+    echo "Failure to receive network data";
+
   elif [[ $errorCode == 60 ]]; then
-    echo "TLS Certificate could not be verified";
+    echo "TLS certificate could not be verified";
 
   else
     echo "Unknown error: CURL code #$errorCode";
