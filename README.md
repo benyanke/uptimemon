@@ -5,6 +5,7 @@ I guess something has to go here at some point
 
 ## Files you need to create
  * domains.list - list of domains to check (newline separated)
+   * Insert them in the format "example.com" (no http/s)
  * Slack
    * slack.token - slack token
  * Twilio tokens
