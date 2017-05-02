@@ -1,6 +1,8 @@
 # uptimemon - Simple Webserver Monitoring in Bash
 
-I guess something has to go here at some point
+Simple bash script which scans any number of webservers, checking for downtime, and alerting you as soon as they go down, using slack and/or SMS.
+
+Typically it's easiest to run via cron, usually once per minute, or once per 5 min. The script is designed not to run if an instance is already running, so you have no risk of overloading yourself. My instance with 18 domains takes about 3 minutes to run.
 
 
 ## Files you need to create
