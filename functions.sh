@@ -33,6 +33,9 @@ backoffTime="10";
 # If there is a failure, repeat test this many times before alerting to failure
 failureRepeat="3";
 
+# Cert expire warning window (seconds)
+# You'll start getting alerts this many seconds in advance of an expirationo
+certExpireWarning="172800"; # 2 days
 
 # Sleep Between Checks
 sleepBetweenChecks=10;
@@ -65,6 +68,7 @@ function check() {
 
   # Add checks here
   checkWeb $domain $maxAllowbleLoadTime &
+  checkWebCert $domain &
   sleep $sleepBetweenChecks
 
   # Clear variables for later user
@@ -72,7 +76,30 @@ function check() {
   maxAllowbleLoadTime="";
 }
 
+# Check the web certificate
+function checkWebCert() {
+  domain=$1;
+#  echo "CHECKING CERT ON $domain"
 
+#  curl  --insecure -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s https://$domain > /dev/null 2> /dev/null
+#  curlReturn=$?
+#  echo $curlReturn
+
+  # First, check if the server even uses https
+#  if [[ ]]; then
+#  fi
+
+  if [[ $(secondsToCertExpiryAlert $domain) -lt 0 ]] ; then
+    out="\nDomain:         $domain"
+    out="$out\nCertBot:        Cert is expiring soon."
+
+    printf "$out";
+    logger "$out";
+    slackalert "$out";
+    twilioalert "$out";
+  fi
+
+}
 
 # Check the web
 function checkWeb() {
@@ -330,3 +357,19 @@ function clearLock() {
 	rm /tmp/sitescanlock >/dev/null 2>&1
 }
 
+# Input: domain name
+# Output: (int) seconds to cert expiry
+function secondsToCertExpiryAlert() {
+  domain=$1
+
+  # Cert expire date
+  expireDate=`openssl s_client -servername $domain -connect $domain:443 </dev/null 2>&1 | openssl x509 -noout -enddate | awk -F "=" '{print $2}'` 2> /dev/null 3> /dev/null
+  expireTimestamp=`date -d "$expireDate" '+%s'`
+
+  now=`date +%s`
+
+  secondsToExpire=$(($expireTimestamp - $now))
+  secondsToWarning=$(($secondsToExpire - $certExpireWarning))
+
+  echo $secondsToWarning
+}
