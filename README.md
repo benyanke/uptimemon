@@ -16,7 +16,7 @@ I guess something has to go here at some point
 
 ## Todo
 ### Short term
- * Rewrite in python, darnit
+ * Rewrite in python or maybe go, darnit
    * Probably use sqlite for data storage
  * Clean up logging - it's currently a mess
  * Only output errors to slack - clean up that output too
