@@ -1,10 +1,13 @@
 # uptimemon - Simple Webserver Monitoring in Bash
 
-I guess something has to go here at some point
+Simple bash script which scans any number of webservers, checking for downtime, and alerting you as soon as they go down, using slack and/or SMS.
+
+Typically it's easiest to run via cron, usually once per minute, or once per 5 min. The script is designed not to run if an instance is already running, so you have no risk of overloading yourself. My instance with 18 domains takes about 3 minutes to run.
 
 
 ## Files you need to create
  * domains.list - list of domains to check (newline separated)
+   * Insert them in the format "example.com" (no http/s)
  * Slack
    * slack.token - slack token
  * Twilio tokens
@@ -13,6 +16,8 @@ I guess something has to go here at some point
    * twilio_from.token - Number to send message to
    * twilio_to.token - Number to alert
 
+## Requirements - from Apt Repositories 
+ * BC
 
 ## Todo
 ### Short term
@@ -42,7 +47,3 @@ I guess something has to go here at some point
 ### Long Term:
  * Add dashboard functionality - query the script to find site health
  * Historical data storage - like smokeping, for example
-
-
-## Requirements - from Apt Repositories 
- * BC

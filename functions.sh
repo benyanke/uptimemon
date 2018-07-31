@@ -33,6 +33,9 @@ backoffTime="10";
 # If there is a failure, repeat test this many times before alerting to failure
 failureRepeat="3";
 
+# Cert expire warning window (seconds)
+# You'll start getting alerts this many seconds in advance of an expirationo
+certExpireWarning="172800"; # 2 days
 
 # Sleep Between Checks
 sleepBetweenChecks=10;
@@ -65,6 +68,7 @@ function check() {
 
   # Add checks here
   checkWeb $domain $maxAllowbleLoadTime &
+  checkWebCert $domain &
   sleep $sleepBetweenChecks
 
   # Clear variables for later user
@@ -72,7 +76,30 @@ function check() {
   maxAllowbleLoadTime="";
 }
 
+# Check the web certificate
+function checkWebCert() {
+  domain=$1;
+#  echo "CHECKING CERT ON $domain"
 
+#  curl  --insecure -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s https://$domain > /dev/null 2> /dev/null
+#  curlReturn=$?
+#  echo $curlReturn
+
+  # First, check if the server even uses https
+#  if [[ ]]; then
+#  fi
+
+  if [[ $(secondsToCertExpiryAlert $domain) -lt 0 ]] ; then
+    out="\nDomain:         $domain"
+    out="$out\nCertBot:        Cert is expiring soon."
+
+    printf "$out";
+    logger "$out";
+    slackalert "$out";
+    twilioalert "$out";
+  fi
+
+}
 
 # Check the web
 function checkWeb() {
@@ -105,8 +132,13 @@ function checkWeb() {
   # For tracking load time
   before=`timestamp`;
 
+  # This ensures that most caches are bypassed
+  cacheBustDomain="$domain?`date +"%s"`"
+
   # Check web
-  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $cacheBustDomain > /dev/null 2> /dev/null
+#  curl  -H 'Cache-Control: no-cache' --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
+#  curl --retry $failureRepeat --retry-delay $backoffTime --fail -L -s $domain > /dev/null 2> /dev/null
 #  curl --fail -L -s $domain > /dev/null 2> /dev/null
 
   curlReturn=$?
@@ -196,10 +228,16 @@ timestamp() {
 
 
 # convert int curl code to string error
-# https://curl.haxx.se/libcurl/c/libcurl-errors.html
+# Source: https://curl.haxx.se/libcurl/c/libcurl-errors.html
 function curlCodeToString() {
 
   errorCode=$1;
+
+  # Not including all of them here, since they'll so rarely be used
+  # Handling the common codes, then outputing the int code itself if
+  # it's not handled here.
+
+  # Anybody: feel free to fill in more of these and issue a pull request - I'll happily pull
 
   if [[ $errorCode == 0 ]]; then
     echo "Success";
@@ -229,13 +267,22 @@ function curlCodeToString() {
     echo "HTTP2 framing layer issue";
 
   elif [[ $errorCode == 22 ]]; then
-    echo "HTTP Error";
+    echo "HTTP 400 Error";
+
+  elif [[ $errorCode == 35 ]]; then
+    echo "TLS handshake error";
 
   elif [[ $errorCode == 51 ]]; then
     echo "Failed certificate validation";
 
+  elif [[ $errorCode == 52 ]]; then
+    echo "No data returned from server";
+
+  elif [[ $errorCode == 56 ]]; then
+    echo "Failure to receive network data";
+
   elif [[ $errorCode == 60 ]]; then
-    echo "TLS Certificate could not be verified";
+    echo "TLS certificate could not be verified";
 
   else
     echo "Unknown error: CURL code #$errorCode";
@@ -310,3 +357,19 @@ function clearLock() {
 	rm /tmp/sitescanlock >/dev/null 2>&1
 }
 
+# Input: domain name
+# Output: (int) seconds to cert expiry
+function secondsToCertExpiryAlert() {
+  domain=$1
+
+  # Cert expire date
+  expireDate=`openssl s_client -servername $domain -connect $domain:443 </dev/null 2>&1 | openssl x509 -noout -enddate | awk -F "=" '{print $2}'` 2> /dev/null 3> /dev/null
+  expireTimestamp=`date -d "$expireDate" '+%s'`
+
+  now=`date +%s`
+
+  secondsToExpire=$(($expireTimestamp - $now))
+  secondsToWarning=$(($secondsToExpire - $certExpireWarning))
+
+  echo $secondsToWarning
+}
